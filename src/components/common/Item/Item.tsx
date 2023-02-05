@@ -1,5 +1,7 @@
-import style from './Item.module.scss';
+import classNames from 'classnames/bind';
+import styles from './Item.module.scss';
 
+const cx = classNames.bind(styles);
 interface Item {
   id: number;
   content: string;
@@ -17,8 +19,8 @@ const Item = (props: Props) => {
   const { id, content, completed, category, tags } = item;
 
   return (
-    <div>
-      <div>{id}</div>
+    <div className={cx('todo-item', 'bg-slate-300', 'border-violet-300')}>
+      <div>{id + 1}</div>
       <div>{content}</div>
       <div>{completed}</div>
       <div>{category}</div>

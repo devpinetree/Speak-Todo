@@ -23,7 +23,7 @@ const List = () => {
   ];
 
   return (
-    <section className={cx('category')}>
+    <section className={cx('todo-list')}>
       {list.map((item) => (
         <Item item={item} />
       ))}
