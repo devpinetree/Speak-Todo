@@ -4,23 +4,20 @@ import Item from 'components/common/Item';
 
 const cx = classNames.bind(styles);
 
-const List = () => {
-  const list = [
-    {
-      id: 0,
-      content: '슬램덩크 따라하기',
-      completed: true,
-      category: '취미',
-      tags: ['운동', '농구'],
-    },
-    {
-      id: 1,
-      content: '슬램덩크 단관하기',
-      completed: false,
-      category: '취미',
-      tags: ['영화', '농구', '애니'],
-    },
-  ];
+interface IItem {
+  id: number;
+  content: string;
+  status: 'waiting' | 'completed';
+  category: string;
+  tags?: string[];
+}
+
+interface Props {
+  list: IItem[];
+}
+
+const List = (props: Props) => {
+  const { list } = props;
 
   return (
     <section className={cx('todo-list')}>

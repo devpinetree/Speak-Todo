@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import { List } from 'components/common';
+import TodoPage from 'components/TodoPage';
 
 function App() {
-  return <List />;
+  return <TodoPage />;
 }
 
 export default App;
