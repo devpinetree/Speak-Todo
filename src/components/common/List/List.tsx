@@ -20,11 +20,11 @@ const List = (props: Props) => {
   const { list } = props;
 
   return (
-    <section className={cx('todo-list')}>
-      {list.map((item) => (
-        <Item item={item} />
+    <li className={cx('todo-list')}>
+      {list.map((item, idx) => (
+        <Item key={idx} item={item} />
       ))}
-    </section>
+    </li>
   );
 };
 
