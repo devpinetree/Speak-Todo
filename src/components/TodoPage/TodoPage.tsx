@@ -1,87 +1,81 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import List from 'components/common/List';
-import Input from 'components/common/Input';
+import AddTodo from 'components/common/AddTodo';
+import Filter from 'components/common/Filter';
 
+type TFilter = 'waiting' | 'completed' | 'all';
 interface IItem {
   id: number;
   content: string;
   status: 'waiting' | 'completed';
-  category: string;
-  tags?: string[];
 }
 
 // TODO: 데이터 하드코딩 리팩토링 예정 - hooks(api call), constants 추가
 const list = [
   {
     id: 0,
-    content: '슬램덩크 따라하기',
+    content: '영화 1편 보기',
     status: 'waiting',
-    category: '취미',
-    tags: ['운동', '농구'],
   },
   {
     id: 1,
-    content: '슬램덩크 단관하기',
+    content: '데이트 코스 짜기',
     status: 'completed',
-    category: '취미',
-    tags: ['영화', '농구', '애니'],
   },
 ];
 
 const TodoPage = () => {
-  const [newTodo, setNewTodo] = useState<string>('');
+  const filters: TFilter[] = ['all', 'waiting', 'completed'];
+
   const [totalTodos, setTotalTodos] = useState<IItem[] | any[]>(list); // 전체 Todos
-  const [waitingTodos, setWaitingTodos] = useState<IItem[] | any[]>([]); // 대기 중인 Todos
-  const [completedTodos, setCompletedTodos] = useState<IItem[] | any[]>([]); // 완료된 Todos
-
-  useEffect(() => {
-    setWaitingTodos(
-      totalTodos.filter((item) => {
-        return item.status === 'waiting';
-      })
-    );
-    setCompletedTodos(
-      totalTodos.filter((item) => {
-        return item.status === 'completed';
-      })
-    );
-  }, [totalTodos]);
-
-  const setTodo = useCallback((text: string) => {
-    setNewTodo(text);
-  }, []);
+  const [filter, setFilter] = useState<TFilter>('all'); // 필터
 
   const addTodo = useCallback(
-    (e: React.MouseEvent) => {
+    (text: string) => {
       const newTodoItem = {
         id: totalTodos.length,
-        content: newTodo,
+        content: text,
         status: 'waiting',
-        category: '신규',
       };
-      const newTodos = [...totalTodos, newTodoItem];
-      setTotalTodos(newTodos);
-      console.log(newTodos, totalTodos);
+      setTotalTodos([...totalTodos, newTodoItem]);
     },
-    [newTodo, totalTodos]
+    [totalTodos]
+  );
+
+  const updateTodo = useCallback(
+    (todoItem: IItem) => {
+      setTotalTodos(
+        totalTodos.map((todo) => (todo.id === todoItem.id ? todoItem : todo))
+      );
+    },
+    [totalTodos]
+  );
+
+  const deleteTodo = useCallback(
+    (todoItem: IItem) => {
+      setTotalTodos(
+        totalTodos.filter(
+          (curItem) =>
+            curItem.id !== todoItem.id && curItem.content !== todoItem.content
+        )
+      );
+    },
+    [totalTodos]
   );
 
   return (
     <section>
-      <Input setText={setTodo} />
-      <button onClick={(e) => addTodo(e)}> + </button>
-      {waitingTodos && (
-        <div>
-          <span>해야할 일</span>
-          <List list={waitingTodos} />
-        </div>
-      )}
-      {completedTodos && (
-        <div>
-          <span>완료한 일</span>
-          <List list={completedTodos} />
-        </div>
-      )}
+      <AddTodo onAdd={addTodo} />
+      <div>
+        <Filter filters={filters} filter={filter} onFilter={setFilter} />
+        <span>TODO</span>
+        <List
+          list={totalTodos}
+          filter={filter}
+          onUpdate={updateTodo}
+          onDelete={deleteTodo}
+        />
+      </div>
     </section>
   );
 };
