@@ -15,15 +15,25 @@ const Filter = (props: Props) => {
   const { filters, filter, onFilter } = props;
 
   return (
-    <li>
-      {filters?.map((value: TFilter, idx: number) => {
-        return (
-          <ul key={idx}>
-            <button onClick={() => onFilter(value)}>{value}</button>
-          </ul>
-        );
-      })}
-    </li>
+    <header className={cx('header')}>
+      <ul className={cx('filters')}>
+        {filters?.map((value: TFilter, idx: number) => {
+          return (
+            <li key={idx}>
+              <button
+                className={cx(
+                  'filter-item',
+                  `${filter === value && 'selected'}`
+                )}
+                onClick={() => onFilter(value)}
+              >
+                {value}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </header>
   );
 };
 
