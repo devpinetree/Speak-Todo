@@ -64,9 +64,8 @@ const TodoPage = () => {
   );
 
   return (
-    <section>
-      <AddTodo onAdd={addTodo} />
-      <div>
+    <>
+      <section>
         <Filter filters={filters} filter={filter} onFilter={setFilter} />
         <span>TODO</span>
         <List
@@ -75,8 +74,9 @@ const TodoPage = () => {
           onUpdate={updateTodo}
           onDelete={deleteTodo}
         />
-      </div>
-    </section>
+        <AddTodo onAdd={addTodo} />
+      </section>
+    </>
   );
 };
 

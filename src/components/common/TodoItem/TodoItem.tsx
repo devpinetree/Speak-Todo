@@ -26,7 +26,7 @@ const TodoItem = (props: Props) => {
   };
 
   return (
-    <ul className={cx('todo-item', 'bg-slate-300', 'border-violet-300')}>
+    <li className={cx('todo-item', 'bg-slate-300', 'border-violet-300')}>
       <input
         type="checkbox"
         id="checkbox"
@@ -39,7 +39,7 @@ const TodoItem = (props: Props) => {
         {id + 1}. {content}
       </span>
       <button onClick={() => onDelete(item)}> X </button>
-    </ul>
+    </li>
   );
 };
 

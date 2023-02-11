@@ -24,7 +24,7 @@ const List = (props: Props) => {
   const filtered = getFilteredItems(list, filter);
 
   return (
-    <li className={cx('todo-list')}>
+    <ul className={cx('todo-list')}>
       {filtered.map((item: IItem, idx: number) => (
         <TodoItem
           key={idx}
@@ -33,7 +33,7 @@ const List = (props: Props) => {
           onDelete={onDelete}
         />
       ))}
-    </li>
+    </ul>
   );
 };
 
